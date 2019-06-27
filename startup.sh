@@ -40,39 +40,39 @@ then
   exit 0
 fi
 
-echo ">> reducing the amount of spam processed by postfix"
+#echo ">> reducing the amount of spam processed by postfix"
 # https://www.howtoforge.com/virtual_postfix_antispam
 
-postconf -e smtpd_helo_required=yes
-postconf -e strict_rfc821_envelopes=yes
-postconf -e disable_vrfy_command=yes
+#postconf -e smtpd_helo_required=yes
+#postconf -e strict_rfc821_envelopes=yes
+#postconf -e disable_vrfy_command=yes
 
-postconf -e unknown_address_reject_code=554
-postconf -e unknown_hostname_reject_code=554
-postconf -e unknown_client_reject_code=554
+#postconf -e unknown_address_reject_code=554
+#postconf -e unknown_hostname_reject_code=554
+#postconf -e unknown_client_reject_code=554
 
-postconf -e "smtpd_helo_restrictions=\
-  permit_mynetworks,\
-  reject_non_fqdn_helo_hostname,\
-  reject_unknown_helo_hostname,\
-  reject_invalid_helo_hostname,\
-  permit"
+#postconf -e "smtpd_helo_restrictions=\
+#  permit_mynetworks,\
+#  reject_non_fqdn_helo_hostname,\
+#  reject_unknown_helo_hostname,\
+#  reject_invalid_helo_hostname,\
+#  permit"
 
-postconf -e "smtpd_recipient_restrictions=\
-  reject_invalid_hostname,\
-  reject_non_fqdn_hostname,\
-  reject_non_fqdn_sender,\
-  reject_non_fqdn_recipient,\
-  reject_unknown_sender_domain,\
-  reject_unknown_recipient_domain,\
-  permit_mynetworks,\
-  reject_unauth_destination,\
-  reject_rbl_client cbl.abuseat.org,\
-  reject_rbl_client sbl-xbl.spamhaus.org,\
-  reject_rbl_client bl.spamcop.net, \
-  reject_rhsbl_sender dsn.rfc-ignorant.org,\
-  check_policy_service inet:127.0.0.1:10023,\
-  permit"
+#postconf -e "smtpd_recipient_restrictions=\
+#  reject_invalid_hostname,\
+#  reject_non_fqdn_hostname,\
+#  reject_non_fqdn_sender,\
+#  reject_non_fqdn_recipient,\
+#  reject_unknown_sender_domain,\
+#  reject_unknown_recipient_domain,\
+#  permit_mynetworks,\
+#  reject_unauth_destination,\
+#  reject_rbl_client cbl.abuseat.org,\
+#  reject_rbl_client sbl-xbl.spamhaus.org,\
+#  reject_rbl_client bl.spamcop.net, \
+#  reject_rhsbl_sender dsn.rfc-ignorant.org,\
+#  check_policy_service inet:127.0.0.1:10023,\
+#  permit"
 
 echo ">> setting up postfix for $MAIL_HOST"
 
@@ -97,16 +97,13 @@ cat /etc/postfix/virtual
 # map virtual addresses
 postmap /etc/postfix/virtual
 
-echo ">> Setting postgrey options"
-
-echo 'POSTGREY_OPTS="--inet=127.0.0.1:10023 --delay=60"' > /etc/default/postgray
+#echo ">> Setting postgrey options"
+#echo 'POSTGREY_OPTS="--inet=127.0.0.1:10023 --delay=60"' > /etc/default/postgray
 
 # starting services
 echo ">> starting the services"
 service rsyslog start
-
-service postgrey start
-
+#service postgrey start
 service postfix start
 
 # print logs
