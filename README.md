@@ -1,5 +1,6 @@
-# postfix-forward
-docker container for forwarding emails to another server, for example gmail
+# email-forwarder
+docker container for forwarding emails to another email address(s), domain(s), or server(s).
+For Example; forward emails from your custom domain to your gmail
 
 ## Example:
 ```
@@ -7,7 +8,7 @@ docker run -d -p 25:25\
 -e MAIL_HOST="mail.example.com"\
 -e VIRTUAL_ALIAS_DOMAINS="example.com"\
 -e VIRTUAL_ALIAS_MAPS="@example.com me@gmail.com"\
-boro/mail-forwarder
+boro/email-forwarder
 ```
 
 this creates a new smtp server which listens on port 25 and forwards all email sent to example.com to me@gmail.com
